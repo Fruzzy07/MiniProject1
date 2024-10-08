@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ profile.user.username }}'s Profile</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+</head>
+<body>
+    <div class="profile-container">
+        <h1>{{ profile.user.username }}'s Profile</h1>
+
+        {% if profile.profile_picture %}
+            <img src="{{ profile.profile_picture.url }}" alt="Profile Picture" style="width:300px; height:auto">
+        {% else %}
+            <img src="https://papik.pro/grafic/uploads/posts/2023-04/1681528233_papik-pro-p-lichnii-logotip-vektor-4.png" alt="Default Profile Picture" style="width:150px;">
+        {% endif %}
+
+        <p class="bio">Bio: {{ profile.bio }}</p>
+
+        <!-- Displaying followers and following counts -->
+        <p><strong>Followers:</strong> {{ followers_count }}</p>
+        <p><strong>Following:</strong> {{ following_count }}</p>
+
+        {% if request.user == profile.user %}
+            <a href="{% url 'edit_profile' %}">Edit Profile</a>
+        {% else %}
+            {% if is_following %}
+                <p>You are following this user.</p>
+                <a href="{% url 'unfollow_user' profile.user.username %}" class="unfollow-button">Unfollow</a>
+            {% else %}
+                <a href="{% url 'follow_user' profile.user.username %}" class="follow-button">Follow</a>
+            {% endif %}
+        {% endif %}
+
+        <a href="{% url 'home' %}" class="back-to-home">Back to Home</a>
+    </div>
+</body>
+</html>
+
+
+

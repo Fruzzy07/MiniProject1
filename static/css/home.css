@@ -1,0 +1,126 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #070707;
+}
+
+.header {
+    display: block;
+    justify-content: flex-end;
+    padding: 20px;
+    background-color: #070707;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+}
+
+.create-post-link, .nav-links a, .nav-links p {
+    color: cornsilk;
+}
+
+.name-of-the-blog{
+    margin-left: 200px;
+}
+
+.nav-links a {
+    background-color: transparent;
+    padding: 0;
+    border: none;
+}
+
+.create-post-link {
+    margin-left: 700px;
+}
+
+
+
+.nav-links a:hover {
+    text-decoration: underline;
+}
+
+h1 {
+    color: #6c6565;
+    text-align: center;
+    margin: 20px 0;
+}
+
+.orange-text {
+    color: orange;
+}
+
+
+h2 {
+    color: #6c6565;
+    text-align: center;
+    margin: 20px 0;
+}
+
+
+.post-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+
+.post {
+    background: cornsilk;
+    margin: 10px;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    flex: 1 1 calc(30% - 20px);
+    max-width: calc(30% - 20px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Разделяет контент и футер */
+}
+
+
+.post img {
+    width: 100%;
+    max-height: 150px;
+    object-fit: cover; /* Обеспечивает обрезку изображения для соответствия */
+    margin-bottom: 5px;
+    margin-top: 10px;
+}
+
+
+.post h3,
+.post p {
+    margin: 0 30px;
+}
+
+.post-footer {
+    margin-top: 10px;
+}
+
+
+a {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: transparent;
+    color: #6c6565;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-left: 30px;
+}
+
+a:hover {
+    background-color: black;
+}
+
+
+
+
+

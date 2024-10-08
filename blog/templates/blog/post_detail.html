@@ -1,0 +1,55 @@
+<!-- blog/templates/blog/post_detail.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ post.title }}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/post_detail.css' %}"> <!-- Link to the CSS file -->
+</head>
+<body>
+    <div class="post-header">
+        <h1>{{ post.title }}</h1>
+        <div class="post-buttons">
+            {% if user == post.author %}
+                <a href="{% url 'edit_post' post.pk %}" class="edit-button">Edit Post</a>
+                <a href="{% url 'delete_post' post.pk %}" class="delete-button">Delete Post</a>
+            {% endif %}
+        </div>
+    </div>
+    <p>By <a href="{% url 'profile' post.author.username %}">{{ post.author }}</a> | {{ post.created_at }}</p>
+
+    {% if post.image %}
+    <img src="{{ post.image.url }}" alt="{{ post.title }}">
+    {% endif %}
+
+    <p>{{ post.content }}</p>
+
+    <h2>Comments</h2>
+    <ul>
+        {% for comment in comments %}
+        <li>
+            <strong>{{ comment.author }}</strong> said: {{ comment.content }} on {{ comment.created_at }}
+        </li>
+        {% empty %}
+        <li>No comments yet.</li>
+        {% endfor %}
+    </ul>
+
+    {% if error_message %}
+    <p style="color: red;">{{ error_message }}</p>
+    <a href="{% url 'login' %}">Login</a>  <!-- Link to login page -->
+    {% else %}
+    <h3>Add a Comment</h3>
+    <form method="POST" action="{% url 'add_comment' post.pk %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Add Comment</button>
+    </form>
+    {% endif %}
+
+    <a href="{% url 'home' %}" class="back-to-home">Back to home</a>
+</body>
+</html>
+
