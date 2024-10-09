@@ -4,10 +4,22 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/post_form.css' %}"> <!-- Link to your CSS file -->
 
-    <title>{% if form.instance.pk %}Edit Post{% else %}Create Post{% endif %}</title>
+    <title>
+        {% if form.instance.pk %}
+            Edit Post
+        {% else %}
+            Create Post
+        {% endif %}
+    </title>
 </head>
 <body>
-    <h1>{% if form.instance.pk %}Edit Post{% else %}Create Post{% endif %}</h1>
+    <h1>
+        {% if form.instance.pk %}
+            Edit Post
+        {% else %}
+            Create Post
+        {% endif %}
+    </h1>
 
     <form method="POST" enctype="multipart/form-data">  <!-- Add enctype -->
         {% csrf_token %}

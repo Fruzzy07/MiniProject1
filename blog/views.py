@@ -1,4 +1,3 @@
-from django.contrib import messages
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Post
 from .forms import PostForm, CommentForm
@@ -18,12 +17,10 @@ def post_list(request):
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
     comments = post.comments.all()
-    comment_form = CommentForm()  # Instantiate the form here
+    comment_form = CommentForm()
     if request.user.is_authenticated:
-        # Allow comments to be added
         return render(request, 'blog/post_detail.html', {'post': post, 'comments': comments, 'form': comment_form})
     else:
-        # User is not authenticated, show message
         error_message = "You must be logged in to add a comment."
         return render(request, 'blog/post_detail.html', {
             'post': post,
@@ -36,11 +33,10 @@ def post_detail(request, pk):
 
 def create_post(request):
     if not request.user.is_authenticated:
-        messages.error(request, "You must be logged in to create a post.")
         return redirect('login')
 
     if request.method == 'POST':
-        form = PostForm(request.POST, request.FILES)  # Include request.FILES
+        form = PostForm(request.POST, request.FILES)
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
@@ -55,12 +51,8 @@ def create_post(request):
 def edit_post(request, pk):
     post = get_object_or_404(Post, pk=pk)
 
-    if request.user != post.author:
-        messages.error(request, "You do not have permission to edit it")
-        return redirect('post_detail', pk=post.pk)
-
     if request.method == 'POST':
-        form = PostForm(request.POST, request.FILES, instance=post)  # Добавьте request.FILES здесь
+        form = PostForm(request.POST, request.FILES, instance=post)
         if form.is_valid():
             form.save()
             return redirect('post_detail', pk=post.pk)
@@ -72,15 +64,13 @@ def edit_post(request, pk):
 def delete_post(request, pk):
     post = get_object_or_404(Post, pk=pk)
 
-    if request.user != post.author:
-        messages.error(request, "You do not have permission to delete it")
-        return redirect('post_detail', pk=post.pk)
-
     if request.method == 'POST':
         post.delete()
-        return redirect('home')  # Redirect to home or any other page after deletion
+        return redirect('home')
     return render(request, 'blog/post_confirm_delete.html', {'post': post})
-@login_required  # Ensure that only authenticated users can add comments
+
+
+@login_required
 def add_comment(request, pk):
     post = get_object_or_404(Post, pk=pk)
 

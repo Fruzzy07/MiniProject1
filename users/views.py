@@ -1,6 +1,5 @@
 from django.contrib.auth.models import User
 from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib.auth.forms import UserCreationForm
 from .models import Profile, Follow
 from .forms import ProfileForm
 from django.contrib.auth import authenticate, login
@@ -12,9 +11,8 @@ def register(request):
         form = UserRegistrationForm(request.POST, request.FILES)
         if form.is_valid():
             user = form.save()
-            # Profile.objects.create(user=user)  # Создание профиля для нового пользователя
             Profile.objects.create(user=user, profile_picture=form.cleaned_data['profile_picture'])
-            return redirect('login')  # Перенаправление на страницу входа
+            return redirect('login')
     else:
         form = UserRegistrationForm()
     return render(request, 'users/register.html', {'form': form})
